@@ -47,6 +47,15 @@ public class GoogleJavaFormatFormattingServiceTest {
   private QbixusJavaFormatSettings settings;
   private DelegatingFormatter delegatingFormatter;
 
+  private PsiFile createPsiFile(String path, String... contents) throws IOException {
+    VirtualFile virtualFile =
+        fixture.getTempDirFixture().createFile(path, String.join("\n", contents));
+    fixture.configureFromExistingVirtualFile(virtualFile);
+    PsiFile psiFile = fixture.getFile();
+    assertThat(psiFile).isNotNull();
+    return psiFile;
+  }
+
   @Before
   public void setUp() throws Exception {
     TestFixtureBuilder<IdeaProjectTestFixture> projectBuilder =
@@ -211,15 +220,6 @@ public class GoogleJavaFormatFormattingServiceTest {
 
     assertThat(file.getText()).containsMatch("/\\*\\* hello \\*/");
     assertThat(delegatingFormatter.wasInvoked()).isTrue();
-  }
-
-  private PsiFile createPsiFile(String path, String... contents) throws IOException {
-    VirtualFile virtualFile =
-        fixture.getTempDirFixture().createFile(path, String.join("\n", contents));
-    fixture.configureFromExistingVirtualFile(virtualFile);
-    PsiFile psiFile = fixture.getFile();
-    assertThat(psiFile).isNotNull();
-    return psiFile;
   }
 
   private static final class DelegatingFormatter extends GoogleJavaFormatFormattingService {

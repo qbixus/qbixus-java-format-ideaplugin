@@ -31,20 +31,6 @@ final class InitialConfigurationStartupActivity implements ProjectActivity {
 
   private static final String NOTIFICATION_TITLE = "Enable qbixus-java-format";
 
-  @Nullable
-  @Override
-  public Object execute(@NotNull Project project, @NotNull Continuation<? super Unit> continuation) {
-    QbixusJavaFormatSettings settings = QbixusJavaFormatSettings.getInstance(project);
-
-    if (settings.isUninitialized()) {
-      settings.setEnabled(false);
-      displayNewUserNotification(project, settings);
-    } else if (settings.isEnabled()) {
-      JreConfigurationChecker.checkJreConfiguration(project);
-    }
-    return null;
-  }
-
   private void displayNewUserNotification(Project project, QbixusJavaFormatSettings settings) {
     NotificationGroupManager groupManager = NotificationGroupManager.getInstance();
     NotificationGroup group = groupManager.getNotificationGroup(NOTIFICATION_TITLE);
@@ -61,5 +47,19 @@ final class InitialConfigurationStartupActivity implements ProjectActivity {
           n.expire();
         });
     notification.notify(project);
+  }
+
+  @Nullable
+  @Override
+  public Object execute(@NotNull Project project, @NotNull Continuation<? super Unit> continuation) {
+    QbixusJavaFormatSettings settings = QbixusJavaFormatSettings.getInstance(project);
+
+    if (settings.isUninitialized()) {
+      settings.setEnabled(false);
+      displayNewUserNotification(project, settings);
+    } else if (settings.isEnabled()) {
+      JreConfigurationChecker.checkJreConfiguration(project);
+    }
+    return null;
   }
 }

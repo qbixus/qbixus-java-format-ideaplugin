@@ -64,14 +64,6 @@ public class GoogleJavaFormatFormattingService extends AsyncDocumentFormattingSe
     return "qbixus-java-format";
   }
 
-  private static Formatter createFormatter(Style style, boolean canChangeWhiteSpaceOnly) {
-    JavaFormatterOptions.Builder optBuilder = JavaFormatterOptions.builder().style(style);
-    if (canChangeWhiteSpaceOnly) {
-      optBuilder.formatJavadoc(false).reorderModifiers(false);
-    }
-    return new Formatter(optBuilder.build());
-  }
-
   @Override
   public @NotNull Set<Feature> getFeatures() {
     return Set.of(Feature.FORMAT_FRAGMENTS, Feature.OPTIMIZE_IMPORTS);
@@ -88,7 +80,16 @@ public class GoogleJavaFormatFormattingService extends AsyncDocumentFormattingSe
     return IMPORT_OPTIMIZERS;
   }
 
+  private static Formatter createFormatter(Style style, boolean canChangeWhiteSpaceOnly) {
+    JavaFormatterOptions.Builder optBuilder = JavaFormatterOptions.builder().style(style);
+    if (canChangeWhiteSpaceOnly) {
+      optBuilder.formatJavadoc(false).reorderModifiers(false);
+    }
+    return new Formatter(optBuilder.build());
+  }
+
   private static final class GoogleJavaFormatFormattingTask implements FormattingTask {
+
     private final Formatter formatter;
     private final AsyncFormattingRequest request;
 
@@ -109,6 +110,16 @@ public class GoogleJavaFormatFormattingService extends AsyncDocumentFormattingSe
       }
     }
 
+    @Override
+    public boolean isRunUnderProgress() {
+      return true;
+    }
+
+    @Override
+    public boolean cancel() {
+      return false;
+    }
+
     private static Collection<Range<Integer>> toRanges(AsyncFormattingRequest request) {
       if (isWholeFile(request)) {
         // The IDE sometimes passes invalid ranges when the file is unsaved before invoking the
@@ -126,16 +137,6 @@ public class GoogleJavaFormatFormattingService extends AsyncDocumentFormattingSe
           && ranges.get(0).getStartOffset() == 0
           // using greater than or equal because ranges are sometimes passed inaccurately
           && ranges.get(0).getEndOffset() >= request.getDocumentText().length();
-    }
-
-    @Override
-    public boolean isRunUnderProgress() {
-      return true;
-    }
-
-    @Override
-    public boolean cancel() {
-      return false;
     }
   }
 }

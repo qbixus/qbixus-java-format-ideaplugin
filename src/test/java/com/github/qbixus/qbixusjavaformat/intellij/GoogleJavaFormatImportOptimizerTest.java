@@ -42,8 +42,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class GoogleJavaFormatImportOptimizerTest {
+
   private JavaCodeInsightTestFixture fixture;
   private DelegatingFormatter delegatingFormatter;
+
+  private PsiFile createPsiFile(String path, String... contents) throws IOException {
+    VirtualFile virtualFile =
+        fixture.getTempDirFixture().createFile(path, String.join("\n", contents));
+    fixture.configureFromExistingVirtualFile(virtualFile);
+    PsiFile psiFile = fixture.getFile();
+    assertThat(psiFile).isNotNull();
+    return psiFile;
+  }
 
   @Before
   public void setUp() throws Exception {
@@ -126,15 +136,6 @@ public class GoogleJavaFormatImportOptimizerTest {
     assertThat(delegatingFormatter.wasInvoked()).isTrue();
   }
 
-  private PsiFile createPsiFile(String path, String... contents) throws IOException {
-    VirtualFile virtualFile =
-        fixture.getTempDirFixture().createFile(path, String.join("\n", contents));
-    fixture.configureFromExistingVirtualFile(virtualFile);
-    PsiFile psiFile = fixture.getFile();
-    assertThat(psiFile).isNotNull();
-    return psiFile;
-  }
-
   private static final class DelegatingFormatter extends GoogleJavaFormatFormattingService {
 
     private boolean invoked = false;
@@ -143,13 +144,9 @@ public class GoogleJavaFormatImportOptimizerTest {
       return invoked;
     }
 
-    @Override
-    public @NotNull Set<ImportOptimizer> getImportOptimizers(@NotNull PsiFile file) {
-      return super.getImportOptimizers(file).stream().map(this::wrap).collect(toImmutableSet());
-    }
-
     private ImportOptimizer wrap(ImportOptimizer delegate) {
       return new ImportOptimizer() {
+
         @Override
         public boolean supports(@NotNull PsiFile file) {
           return delegate.supports(file);
@@ -163,6 +160,11 @@ public class GoogleJavaFormatImportOptimizerTest {
           };
         }
       };
+    }
+
+    @Override
+    public @NotNull Set<ImportOptimizer> getImportOptimizers(@NotNull PsiFile file) {
+      return super.getImportOptimizers(file).stream().map(this::wrap).collect(toImmutableSet());
     }
   }
 }

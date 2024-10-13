@@ -37,21 +37,6 @@ class QbixusJavaFormatSettings implements PersistentStateComponent<QbixusJavaFor
     this.project = project;
   }
 
-  static QbixusJavaFormatSettings getInstance(Project project) {
-    return project.getService(QbixusJavaFormatSettings.class);
-  }
-
-  @Nullable
-  @Override
-  public State getState() {
-    return state;
-  }
-
-  @Override
-  public void loadState(@NotNull State state) {
-    this.state = state;
-  }
-
   boolean isEnabled() {
     return state.enabled.equals(EnabledState.ENABLED);
   }
@@ -79,6 +64,21 @@ class QbixusJavaFormatSettings implements PersistentStateComponent<QbixusJavaFor
     state.style = style;
   }
 
+  @Nullable
+  @Override
+  public State getState() {
+    return state;
+  }
+
+  @Override
+  public void loadState(@NotNull State state) {
+    this.state = state;
+  }
+
+  static QbixusJavaFormatSettings getInstance(Project project) {
+    return project.getService(QbixusJavaFormatSettings.class);
+  }
+
   enum EnabledState {
     UNKNOWN,
     ENABLED,
@@ -87,19 +87,8 @@ class QbixusJavaFormatSettings implements PersistentStateComponent<QbixusJavaFor
 
   static class State {
 
-    private EnabledState enabled = EnabledState.UNKNOWN;
     public JavaFormatterOptions.Style style = JavaFormatterOptions.Style.GOOGLE;
-
-    // enabled used to be a boolean so we use bean property methods for backwards compatibility
-    public void setEnabled(@Nullable String enabledStr) {
-      if (enabledStr == null) {
-        enabled = EnabledState.UNKNOWN;
-      } else if (Boolean.parseBoolean(enabledStr)) {
-        enabled = EnabledState.ENABLED;
-      } else {
-        enabled = EnabledState.DISABLED;
-      }
-    }
+    private EnabledState enabled = EnabledState.UNKNOWN;
 
     public String getEnabled() {
       switch (enabled) {
@@ -109,6 +98,17 @@ class QbixusJavaFormatSettings implements PersistentStateComponent<QbixusJavaFor
           return "false";
         default:
           return null;
+      }
+    }
+
+    // enabled used to be a boolean so we use bean property methods for backwards compatibility
+    public void setEnabled(@Nullable String enabledStr) {
+      if (enabledStr == null) {
+        enabled = EnabledState.UNKNOWN;
+      } else if (Boolean.parseBoolean(enabledStr)) {
+        enabled = EnabledState.ENABLED;
+      } else {
+        enabled = EnabledState.DISABLED;
       }
     }
   }

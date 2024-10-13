@@ -26,22 +26,31 @@ import java.util.function.Supplier;
 
 class JreConfigurationChecker {
 
+  private static final Logger logger = Logger.getInstance(JreConfigurationChecker.class);
   private static final Supplier<Boolean> hasAccess =
       Suppliers.memoize(JreConfigurationChecker::checkJreConfiguration);
-  private static final Logger logger = Logger.getInstance(JreConfigurationChecker.class);
-
   private final Project project;
 
   public JreConfigurationChecker(Project project) {
     this.project = project;
   }
 
-  static boolean checkJreConfiguration(Project project) {
-    var success = hasAccess.get();
-    if (!success) {
-      project.getService(JreConfigurationChecker.class).displayConfigurationErrorNotification();
-    }
-    return success;
+  private void displayConfigurationErrorNotification() {
+    Notification notification =
+        new Notification(
+            "Configure JRE for qbixus-java-format",
+            "Configure the JRE for qbixus-java-format",
+            "The qbixus-java-format plugin needs additional configuration before it can be used. "
+                + "<a href=\"instructions\">Follow the instructions here</a>.",
+            NotificationType.INFORMATION);
+    notification.setListener(
+        (n, e) -> {
+          IdeUiService.getInstance()
+              .browse(
+                  "https://github.com/qbixus/google-java-format/blob/master/README.md#intellij-jre-config");
+          n.expire();
+        });
+    notification.notify(project);
   }
 
   /**
@@ -84,21 +93,11 @@ class JreConfigurationChecker {
             JreConfigurationChecker.class.getClassLoader().getUnnamedModule());
   }
 
-  private void displayConfigurationErrorNotification() {
-    Notification notification =
-        new Notification(
-            "Configure JRE for qbixus-java-format",
-            "Configure the JRE for qbixus-java-format",
-            "The qbixus-java-format plugin needs additional configuration before it can be used. "
-                + "<a href=\"instructions\">Follow the instructions here</a>.",
-            NotificationType.INFORMATION);
-    notification.setListener(
-        (n, e) -> {
-          IdeUiService.getInstance()
-              .browse(
-                  "https://github.com/qbixus/google-java-format/blob/master/README.md#intellij-jre-config");
-          n.expire();
-        });
-    notification.notify(project);
+  static boolean checkJreConfiguration(Project project) {
+    var success = hasAccess.get();
+    if (!success) {
+      project.getService(JreConfigurationChecker.class).displayConfigurationErrorNotification();
+    }
+    return success;
   }
 }
