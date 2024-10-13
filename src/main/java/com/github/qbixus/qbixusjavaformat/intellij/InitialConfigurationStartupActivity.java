@@ -21,15 +21,19 @@ import com.intellij.notification.NotificationGroup;
 import com.intellij.notification.NotificationGroupManager;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.startup.StartupActivity;
+import com.intellij.openapi.startup.ProjectActivity;
+import kotlin.Unit;
+import kotlin.coroutines.Continuation;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-final class InitialConfigurationStartupActivity implements StartupActivity.Background {
+final class InitialConfigurationStartupActivity implements ProjectActivity {
 
   private static final String NOTIFICATION_TITLE = "Enable qbixus-java-format";
 
+  @Nullable
   @Override
-  public void runActivity(@NotNull Project project) {
+  public Object execute(@NotNull Project project, @NotNull Continuation<? super Unit> continuation) {
     QbixusJavaFormatSettings settings = QbixusJavaFormatSettings.getInstance(project);
 
     if (settings.isUninitialized()) {
@@ -38,6 +42,7 @@ final class InitialConfigurationStartupActivity implements StartupActivity.Backg
     } else if (settings.isEnabled()) {
       JreConfigurationChecker.checkJreConfiguration(project);
     }
+    return null;
   }
 
   private void displayNewUserNotification(Project project, QbixusJavaFormatSettings settings) {
