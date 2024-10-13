@@ -31,6 +31,7 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
+    implementation(libs.formatter)
     testImplementation(libs.junit)
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
@@ -73,10 +74,10 @@ intellijPlatform {
         changeNotes = providers.gradleProperty("pluginVersion").map { pluginVersion ->
             with(changelog) {
                 renderItem(
-                    (getOrNull(pluginVersion) ?: getUnreleased())
-                        .withHeader(false)
-                        .withEmptySections(false),
-                    Changelog.OutputType.HTML,
+                        (getOrNull(pluginVersion) ?: getUnreleased())
+                                .withHeader(false)
+                                .withEmptySections(false),
+                        Changelog.OutputType.HTML,
                 )
             }
         }
@@ -141,10 +142,10 @@ intellijPlatformTesting {
             task {
                 jvmArgumentProviders += CommandLineArgumentProvider {
                     listOf(
-                        "-Drobot-server.port=8082",
-                        "-Dide.mac.message.dialogs.as.sheets=false",
-                        "-Djb.privacy.policy.text=<!--999.999-->",
-                        "-Djb.consents.confirmation.enabled=false",
+                            "-Drobot-server.port=8082",
+                            "-Dide.mac.message.dialogs.as.sheets=false",
+                            "-Djb.privacy.policy.text=<!--999.999-->",
+                            "-Djb.consents.confirmation.enabled=false",
                     )
                 }
             }

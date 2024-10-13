@@ -1,6 +1,7 @@
 [versions]
 # libraries
 junit = "4.13.2"
+formatter = "HEAD-SNAPSHOT"
 
 # plugins
 changelog = "2.2.1"
@@ -11,6 +12,7 @@ qodana = "2024.2.3"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+formatter ={group = "com.github.qbixus.googlejavaformat", name="google-java-format", version.ref = "formatter"}
 
 [plugins]
 changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
