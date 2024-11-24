@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.qbixus.qbixusjavaformat.intellij;
+package io.github.qbixus.qbixusjavaformat.ideaplugin;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.common.collect.ImmutableList;
-import com.github.qbixus.qbixusjavaformat.intellij.QbixusJavaFormatSettings.State;
 import com.intellij.codeInsight.actions.OptimizeImportsProcessor;
 import com.intellij.formatting.service.FormattingService;
 import com.intellij.lang.ImportOptimizer;
@@ -34,6 +33,7 @@ import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory;
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture;
 import com.intellij.testFramework.fixtures.JavaTestFixtureFactory;
 import com.intellij.testFramework.fixtures.TestFixtureBuilder;
+import io.github.qbixus.qbixusjavaformat.ideaplugin.QbixusJavaFormatSettings.State;
 import java.io.IOException;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;

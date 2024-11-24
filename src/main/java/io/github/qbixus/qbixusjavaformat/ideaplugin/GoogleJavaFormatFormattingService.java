@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.qbixus.qbixusjavaformat.intellij;
+package io.github.qbixus.qbixusjavaformat.ideaplugin;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
