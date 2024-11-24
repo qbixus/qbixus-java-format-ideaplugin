@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.qbixus.qbixusjavaformat.intellij;
+package io.github.qbixus.qbixusjavaformat.ideaplugin;
 
 import com.google.googlejavaformat.java.JavaFormatterOptions;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -80,6 +80,7 @@ class QbixusJavaFormatSettings implements PersistentStateComponent<QbixusJavaFor
   }
 
   enum EnabledState {
+
     UNKNOWN,
     ENABLED,
     DISABLED
@@ -88,6 +89,7 @@ class QbixusJavaFormatSettings implements PersistentStateComponent<QbixusJavaFor
   static class State {
 
     public JavaFormatterOptions.Style style = JavaFormatterOptions.Style.GOOGLE;
+
     private EnabledState enabled = EnabledState.UNKNOWN;
 
     public String getEnabled() {

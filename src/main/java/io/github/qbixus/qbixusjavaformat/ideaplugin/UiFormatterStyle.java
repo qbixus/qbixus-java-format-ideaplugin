@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.qbixus.qbixusjavaformat.intellij;
+package io.github.qbixus.qbixusjavaformat.ideaplugin;
 
 import com.google.googlejavaformat.java.JavaFormatterOptions;
 import com.google.googlejavaformat.java.JavaFormatterOptions.Style;

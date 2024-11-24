@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.qbixus.qbixusjavaformat.intellij;
+package io.github.qbixus.qbixusjavaformat.ideaplugin;
 
 import com.intellij.formatting.service.FormattingNotificationService;
 import com.intellij.openapi.project.Project;

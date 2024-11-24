@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.github.qbixus.qbixusjavaformat.intellij;
+package io.github.qbixus.qbixusjavaformat.ideaplugin;
 
-import com.github.qbixus.qbixusjavaformat.intellij.QbixusJavaFormatSettings.EnabledState;
 import com.intellij.openapi.options.BaseConfigurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
@@ -25,6 +24,7 @@ import com.intellij.openapi.ui.ComboBox;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import io.github.qbixus.qbixusjavaformat.ideaplugin.QbixusJavaFormatSettings.EnabledState;
 import java.awt.Insets;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;

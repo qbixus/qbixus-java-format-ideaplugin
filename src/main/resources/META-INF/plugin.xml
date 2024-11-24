@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin require-restart="true">
-    <id>com.github.qbixus.qbixus-java-format.intellij</id>
-    <name>IntelliJ plugin for qbixus-java-format</name>
+    <id>io.github.qbixus.qbixus-java-format-ideaplugin</id>
+    <name>qbixus-java-format</name>
     <vendor>qbixus</vendor>
 
     <depends>com.intellij.modules.java</depends>
@@ -10,20 +10,20 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <formattingService
-                implementation="com.github.qbixus.qbixusjavaformat.intellij.GoogleJavaFormatFormattingService"/>
+                implementation="io.github.qbixus.qbixusjavaformat.ideaplugin.GoogleJavaFormatFormattingService"/>
 
         <backgroundPostStartupActivity
-                implementation="com.github.qbixus.qbixusjavaformat.intellij.InitialConfigurationStartupActivity"/>
+                implementation="io.github.qbixus.qbixusjavaformat.ideaplugin.InitialConfigurationStartupActivity"/>
 
         <projectConfigurable
-                instance="com.github.qbixus.qbixusjavaformat.intellij.GoogleJavaFormatConfigurable"
-                id="com.github.qbixus.qbixusjavaformat.intellij.settings"
-                displayName="qbixus-java-format IntelliJ Settings"/>
+                instance="io.github.qbixus.qbixusjavaformat.ideaplugin.GoogleJavaFormatConfigurable"
+                id="io.github.qbixus.qbixus-java-format-ideaplugin.settings"
+                displayName="Qbixus Java Format Settings"/>
 
         <projectService
-                serviceImplementation="com.github.qbixus.qbixusjavaformat.intellij.QbixusJavaFormatSettings"/>
+                serviceImplementation="io.github.qbixus.qbixusjavaformat.ideaplugin.QbixusJavaFormatSettings"/>
 
-        <projectService serviceImplementation="com.github.qbixus.qbixusjavaformat.intellij.JreConfigurationChecker"/>
+        <projectService serviceImplementation="io.github.qbixus.qbixusjavaformat.ideaplugin.JreConfigurationChecker"/>
 
         <notificationGroup displayType="STICKY_BALLOON" id="Enable qbixus-java-format"
                            isLogByDefault="false"/>

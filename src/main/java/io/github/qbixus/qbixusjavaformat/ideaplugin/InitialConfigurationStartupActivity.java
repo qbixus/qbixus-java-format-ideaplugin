@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.qbixus.qbixusjavaformat.intellij;
+package io.github.qbixus.qbixusjavaformat.ideaplugin;
 
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationGroup;
@@ -51,7 +51,8 @@ final class InitialConfigurationStartupActivity implements ProjectActivity {
 
   @Nullable
   @Override
-  public Object execute(@NotNull Project project, @NotNull Continuation<? super Unit> continuation) {
+  public Object execute(
+      @NotNull Project project, @NotNull Continuation<? super Unit> continuation) {
     QbixusJavaFormatSettings settings = QbixusJavaFormatSettings.getInstance(project);
 
     if (settings.isUninitialized()) {

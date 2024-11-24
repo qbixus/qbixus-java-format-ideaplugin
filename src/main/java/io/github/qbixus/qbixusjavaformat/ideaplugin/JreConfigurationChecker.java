@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.qbixus.qbixusjavaformat.intellij;
+package io.github.qbixus.qbixusjavaformat.ideaplugin;
 
 import com.google.common.base.Suppliers;
 import com.intellij.ide.ui.IdeUiService;
@@ -29,6 +29,7 @@ class JreConfigurationChecker {
   private static final Logger logger = Logger.getInstance(JreConfigurationChecker.class);
   private static final Supplier<Boolean> hasAccess =
       Suppliers.memoize(JreConfigurationChecker::checkJreConfiguration);
+
   private final Project project;
 
   public JreConfigurationChecker(Project project) {
